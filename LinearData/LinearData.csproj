@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LinkedList.cs" />
+    <Compile Include="DoubleLinkedList.cs" />
+    <Compile Include="Stack.cs" />
+    <Compile Include="Queue.cs" />
+    <Compile Include="SingleLinkedList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
