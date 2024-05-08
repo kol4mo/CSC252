@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HierarchicalUnitTest.cs" />
     <Compile Include="LinearUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hierarchical\Hierarchical.csproj">
+      <Project>{2e01b2ca-50b5-4ab4-beea-78fb0d10a446}</Project>
+      <Name>Hierarchical</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LinearData\LinearData.csproj">
       <Project>{c762bafc-5e1a-4490-916f-9109d1d2f23b}</Project>
       <Name>LinearData</Name>
