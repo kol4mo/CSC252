@@ -57,6 +57,8 @@ namespace Hierarchical {
 
             return nextNode == null ? node : Traverse(nextNode, value);
         }
+
+        //bigO(logn)
         private Node<T> TraverseParent(Node<T> node, T value) {
             if (node == null) {
                 return null;
@@ -86,7 +88,7 @@ namespace Hierarchical {
             }
 
 
-            return nextNode == null ? node : Traverse(nextNode, value);
+            return nextNode == null ? node : TraverseParent(nextNode, value);
         }
 
         /*
@@ -102,6 +104,11 @@ namespace Hierarchical {
             Count = 0;
         }
 
+        /// <summary>
+        /// return whether the tree contains a value
+        /// </summary>
+        /// <param name="value">the value to check for</param>
+        /// <returns>true if the value is found in the tree, false if not</returns>
         public bool Contains(T value) {
             Node<T> node = Traverse(Root, value);
             if (node == null) { return false; }
@@ -109,15 +116,66 @@ namespace Hierarchical {
             return false;
         }
 
+        /*
+         *Remove(value) {
+         *  traverse to the node to be removed, call traverse
+         *  traverse to the parent of the rightmost leaf of the left subtree
+         *  lead = node.left
+         *  while node.right.right != null {
+         *      node = node.right
+         *  }
+         *  if Node.right == null { // left subtree 
+         *  node to remove value = node.value
+         *  node to remove. left = node.left
+         *  } else {
+         *  node to remove value = node.right.value
+         *  node.right = node.right.left
+         *  }
+         *  parent of rightmostleaf. right  = rightmostleaf.left
+         *}
+         *
+         *Remove(value)
+         *  starting at the root
+         *      is the root of the node were removing
+         *          if yes remove the root
+         *      otherwise traverse the tree
+         *      is my child(left or right the node to remove
+         *          is my childs left null?
+         *              if yes then make my child my child's right
+         *          otherwise find the right most node of my childs left subtree
+         *              my childs right subtree becomes the right subtree of this node
+         *              my child is my childs left
+         */
+
+        /// <summary>
+        /// removes a node from a tree bigO((logn)^2)
+        /// </summary>
+        /// <param name="value">the value of the node to attempt to remove</param>
         public void Remove(T value) {
-            Node<T> node = TraverseParent(Root, value);
+            if (Root == null) { return; }
+            if (Root.value.CompareTo(value) == 0) {
+                Count--;
+                Node<T> temp = Root.left;
+                Root = Root.right;
+                Node<T> temp2 = Root;
+                while (temp2 != null && temp2.left != null) {//log n
+                    temp2 = temp2.left;
+                }
+                if (temp2 == null) {
+                    temp2 = temp;
+                } else {
+                    temp2.left = temp;
+                }
+                return;
+            }
+            Node<T> node = TraverseParent(Root, value); //logn
             if(node == null) { return; }
             if (node.right.value.CompareTo(value) == 0) {
                 Count--;
                 Node<T> temp = node.right.left;
                 node.right = node.right.right;
                 Node<T> temp2 = node.right;
-                while (temp2 != null && temp2.left != null) {
+                while (temp2 != null && temp2.left != null) {//log n
                     temp2 = temp2.left;
                 }
                 if (temp2 == null) {
@@ -141,6 +199,10 @@ namespace Hierarchical {
             }
         }
 
+        /// <summary>
+        /// find the height of the tree BigO(n)
+        /// </summary>
+        /// <returns>an integer value repesenting the height of the tree</returns>
         public int Height() {
             if (Root == null) return 0;
 
@@ -164,18 +226,114 @@ namespace Hierarchical {
             return height;
         }
 
+        /// <summary>
+        /// generate the tree into a array BigO(n)
+        /// </summary>
+        /// <returns>a sorted array representing the values in the tree</returns>
         public T[] ToArray() {
             T[] array = new T[0];
             array = ToArray(Root, array);
             return array;
         }
 
-        public T[] ToArray(Node<T> node, T[] array) {
+        private T[] ToArray(Node<T> node, T[] array) {
             if (node == null) return array;
             array = ToArray(node.left, array);
             array = array.Append(node.value).ToArray();
             array = ToArray(node.right, array);
             return array;
+        }
+
+        /// <summary>
+        /// generates a string representation of the tree InOrder BigO(n)
+        /// </summary>
+        /// <returns>a string in order from least to greatest</returns>
+        public string InOrder() {
+            string final = string.Empty;
+            final = InOrder(Root, final);
+            return final;
+        }
+
+        /*
+         * InOrder() {
+         *  create string
+         *  string equals InOrderRecursive(root, string)
+         *  return string
+         * }
+         * 
+         * InOrderRecusive(Node, string) {
+         *  if node is null, return string
+         *  string = InOrderRecursive(node.left, string)
+         *  string += node value + ", "
+         *  string = InOrderRecursive(node.right, string)
+         *  return string
+         * }
+         */
+
+        private string InOrder(Node<T> node, string final) {
+            if (node == null) return final;
+            if (node.left != null) {
+                final = InOrder(node.left, final);
+                final += ", ";
+            }
+            final += node.value.ToString();
+            if (node.right != null) {
+                final += ", ";
+                final = InOrder(node.right, final);
+            }
+            return final;
+        }
+
+        /// <summary>
+        /// generates a string representation of the tree in pre order(Root, left, right) BigO(n)
+        /// </summary>
+        /// <returns>a string in pre order(root, left, right) representing the tree</returns>
+        public string PreOrder() {
+            string final = string.Empty;
+            final = PreOrder(Root, final);
+            return final;
+        }
+
+        private string PreOrder(Node<T> node, string final) {
+            if (node == null) return final;
+            final += node.value.ToString();
+            if (node.left != null) {
+                final += ", ";
+                final = PreOrder(node.left, final);
+            }
+            if (node.right != null) {
+                final += ", ";
+                final = PreOrder(node.right, final);
+            }
+            return final;
+
+
+        }
+        
+        /// <summary>
+        /// generates a string representation of the tree in PostOrder(left, right, root) BigO(n)
+        /// </summary>
+        /// <returns>a string in postOrder(left, right, root) representing the tree</returns>
+        public string PostOrder() {
+            string final = string.Empty;
+            final = PostOrder(Root, final);
+            return final;
+        }
+
+        private string PostOrder(Node<T> node, string final) {
+            if (node == null) return final;
+            if (node.left != null) {
+                final = PostOrder(node.left, final);
+                final += ", ";
+            }
+            if (node.right != null) {
+                final = PostOrder(node.right, final);
+                final += ", ";
+            }
+            final += node.value.ToString();
+            return final;
+
+
         }
     }
 

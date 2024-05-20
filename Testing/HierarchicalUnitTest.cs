@@ -85,6 +85,20 @@ namespace Testing {
         }
 
         [TestMethod]
+        public void BSTRemove_RemoveRoot() {
+            BST<int> bst = new BST<int>();
+            bst.Add(1);
+            bst.Add(3);
+            bst.Add(2);
+            bst.Add(4);
+            bst.Remove(1);
+            Assert.IsTrue(bst.Contains(2));
+            Assert.IsTrue(bst.Contains(4));
+            Assert.IsTrue(bst.Root.value == 3, bst.Root.value.ToString());
+            Assert.IsTrue(bst.Count == 3);
+        }
+
+        [TestMethod]
         public void BSTRemove_extraItems() {
             BST<int> bst = new BST<int>();
             bst.Add(1);
@@ -121,10 +135,76 @@ namespace Testing {
             bst.Add(2);
             bst.Add(4);
             int[] newArray = bst.ToArray();
-            for (int i = 0; i < newArray.Length; i++) {
+            for (int i = 0; i < array.Length; i++) {
                 Assert.AreEqual(array[i], newArray[i]);
             }
         }
+
+        [TestMethod]
+        public void BSTToArray_Empty() {
+            BST<int> bst = new BST<int>();
+
+            int[] newArray = bst.ToArray();
+            Assert.IsTrue(newArray.Length == 0);
+        }
+
+        [TestMethod]
+        public void BSTInOrder_HappyPath() {
+            string expected = "1, 2, 3, 4";
+            BST<int> bst = new BST<int>();
+            bst.Add(1);
+            bst.Add(3);
+            bst.Add(2);
+            bst.Add(4);
+            string order = bst.InOrder();
+            Assert.AreEqual(expected, order, order);
+        }
+
+        [TestMethod]
+        public void BSTInOrder_Empty() {
+            BST<int> bst = new BST<int>();
+            string order = bst.InOrder();
+            Assert.AreEqual("", order, order);
+        }
+
+        [TestMethod]
+        public void BSTPreOrder_HappyPath() {
+            string expected = "1, 3, 2, 4";
+            BST<int> bst = new BST<int>();
+            bst.Add(1);
+            bst.Add(3);
+            bst.Add(2);
+            bst.Add(4);
+            string order = bst.PreOrder();
+            Assert.AreEqual(expected, order, order);
+        }
+        [TestMethod]
+        public void BSTPreOrder_Empty() {
+            BST<int> bst = new BST<int>();
+            string order = bst.PreOrder();
+            Assert.AreEqual("", order, order);
+        }
+        [TestMethod]
+        public void BSTPostOrder_HappyPath() {
+            string expected = "2, 4, 3, 1";
+            BST<int> bst = new BST<int>();
+            bst.Add(1);
+            bst.Add(3);
+            bst.Add(2);
+            bst.Add(4);
+            string order = bst.PostOrder();
+            Assert.AreEqual(expected, order, order);
+        }
+        [TestMethod]
+        public void BSTPostOrder_Empty() {
+            BST<int> bst = new BST<int>();
+            string order = bst.PostOrder();
+            Assert.AreEqual("", order, order);
+        }
+        #endregion
+
+        #region AVL
+
         #endregion
     }
 }
