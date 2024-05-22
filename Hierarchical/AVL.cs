@@ -231,12 +231,12 @@ namespace Hierarchical {
 			//Create a node to be the top node
 			AVLNode<T> topNode = null;
 			//If(parent.right is equal to pivot) {
-			if (parent.left.value.CompareTo(pivot.value) == 0) {
+			if (parent.left != null && parent.left.value.CompareTo(pivot.value) == 0) {
 				topNode = parent;
 				//Top node = parent //top node is root
 				Root = pivot;
 				//Root = pivot
-			} else if (pivot.value.CompareTo(pivot.value) > 0) {
+			} else if (pivot.value.CompareTo(parent.value) > 0) {
 				//else If(pivot is greater than parent) {
 				//Set top node equal to parent’s right
 				topNode = parent.right;
@@ -258,12 +258,12 @@ namespace Hierarchical {
 			//Create a node to be the top node
 			AVLNode<T> topNode = null;
 			//If(parent.right is equal to pivot) {
-			if (parent.right.value.CompareTo(pivot.value) == 0) {
+			if (parent.right != null && parent.right.value.CompareTo(pivot.value) == 0) {
 				topNode = parent;
 				//Top node = parent //top node is root
 				Root = pivot;
 				//Root = pivot
-			} else if (pivot.value.CompareTo(pivot.value) > 0) {
+			} else if (pivot.value.CompareTo(parent.value) > 0) {
 				//else If(pivot is greater than parent) {
 				//Set top node equal to parent’s right
 				topNode = parent.right;
@@ -282,10 +282,31 @@ namespace Hierarchical {
 		}
 
 		public void rotateRightLeft(AVLNode<T> parent, AVLNode<T> pivot) {
+			if (parent.right.value.CompareTo(pivot.value) == 0) {
+				rotateRight(parent, pivot.left);
+				rotateLeft(parent, parent.right);
+			} else if (pivot.value.CompareTo(parent.value) > 0) {
+				rotateRight(parent.right, pivot.left);
+				rotateLeft(parent, parent.right.right);
+			} else {
+				rotateRight(parent.left, pivot.left);
+				rotateLeft(parent, parent.left.right);
+			}
 		}
 
 		public void rotateLeftRight(AVLNode<T> parent, AVLNode<T> pivot) {
+			if (parent.left.value.CompareTo(pivot.value) == 0) {
+				rotateLeft(parent, pivot.right);
+			rotateRight(parent, parent.left);
+			} else if (pivot.value.CompareTo(parent.value) > 0) {
+				rotateLeft(parent.right, pivot.right);
+			rotateRight(parent, parent.right.left);
+			} else {
+				rotateLeft(parent.left, pivot.right);
+			rotateRight(parent, parent.left.left);
+			}
 		}
+
 
 
 	}

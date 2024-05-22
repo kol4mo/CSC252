@@ -217,6 +217,21 @@ namespace Testing {
             Assert.AreEqual(avl.Root.left.value, 1);
             Assert.AreEqual(avl.Root.right.value, 3);
         }
+		[TestMethod]
+		public void AVLLeft_NotOnRoot() {
+			AVL<int> avl = new AVL<int>();
+			avl.Add(1);
+			avl.Root.right = new AVLNode<int>(2);
+			avl.Root.right.right = new AVLNode<int>(3);
+			avl.Root.right.right.right = new AVLNode<int>(4);
+
+			avl.rotateLeft(avl.Root, avl.Root.right.right);
+
+			Assert.AreEqual(avl.Root.value, 1);
+			Assert.AreEqual(avl.Root.right.value, 3);
+			Assert.AreEqual(avl.Root.right.left.value, 2);
+			Assert.AreEqual(avl.Root.right.right.value, 4);
+		}
 
 		[TestMethod]
 		public void AVLRight_HappyPath() {
@@ -231,6 +246,82 @@ namespace Testing {
 			Assert.AreEqual(avl.Root.left.value, 1);
 			Assert.AreEqual(avl.Root.right.value, 3);
 		}
+		[TestMethod]
+		public void AVLRight_NotOnRoot() {
+			AVL<int> avl = new AVL<int>();
+			avl.Add(4);
+			avl.Root.left = new AVLNode<int>(3);
+			avl.Root.left.left = new AVLNode<int>(2);
+			avl.Root.left.left.left = new AVLNode<int>(1);
+
+			avl.rotateRight(avl.Root, avl.Root.left.left);
+
+			Assert.AreEqual(avl.Root.value, 4);
+			Assert.AreEqual(avl.Root.left.value, 2);
+			Assert.AreEqual(avl.Root.left.right.value, 3);
+			Assert.AreEqual(avl.Root.left.left.value, 1);
+		}
+		[TestMethod]
+        public void AVLLeftRight_HappyPath() {
+
+			AVL<int> avl = new AVL<int>();
+			avl.Add(3);
+			avl.Root.left = new AVLNode<int>(1);
+			avl.Root.left.right = new AVLNode<int>(2);
+
+            avl.rotateLeftRight(avl.Root, avl.Root.left);
+
+			Assert.AreEqual(avl.Root.value, 2);
+			Assert.AreEqual(avl.Root.left.value, 1);
+			Assert.AreEqual(avl.Root.right.value, 3);
+		}
+		[TestMethod]
+		public void AVLLeftRight_NotOnRoot() {
+
+			AVL<int> avl = new AVL<int>();
+			avl.Add(4);
+			avl.Root.left = new AVLNode<int>(3);
+			avl.Root.left.left = new AVLNode<int>(1);
+			avl.Root.left.left.right = new AVLNode<int>(2);
+
+			avl.rotateLeftRight(avl.Root, avl.Root.left.left);
+
+			Assert.AreEqual(avl.Root.value, 4);
+			Assert.AreEqual(avl.Root.left.value, 2);
+			Assert.AreEqual(avl.Root.left.right.value, 3);
+			Assert.AreEqual(avl.Root.left.left.value, 1);
+		}
+		[TestMethod]
+		public void AVLRightLeft_HappyPath() {
+
+			AVL<int> avl = new AVL<int>();
+			avl.Add(1);
+			avl.Root.right = new AVLNode<int>(3);
+			avl.Root.right.left = new AVLNode<int>(2);
+
+			avl.rotateRightLeft(avl.Root, avl.Root.right);
+
+			Assert.AreEqual(avl.Root.value, 2);
+			Assert.AreEqual(avl.Root.left.value, 1);
+			Assert.AreEqual(avl.Root.right.value, 3);
+		}
+		[TestMethod]
+		public void AVLRightLeft_NotOnRoot() {
+
+			AVL<int> avl = new AVL<int>();
+			avl.Add(1);
+			avl.Root.right = new AVLNode<int>(2);
+			avl.Root.right.right = new AVLNode<int>(4);
+			avl.Root.right.right.left = new AVLNode<int>(3);
+
+			avl.rotateRightLeft(avl.Root, avl.Root.right.right);
+
+			Assert.AreEqual(avl.Root.value, 1);
+			Assert.AreEqual(avl.Root.right.value, 3);
+			Assert.AreEqual(avl.Root.right.right.value, 4);
+			Assert.AreEqual(avl.Root.right.left.value, 2);
+		}
+
 		#endregion
 	}
 }
