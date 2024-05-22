@@ -13,6 +13,7 @@ namespace Hierarchical {
 			AVLNode<T> node = new AVLNode<T>(value);
 			if (Root == null) {
 				Root = node;
+				node.height = 1;
 				return;
 			}
 
@@ -319,6 +320,6 @@ namespace Hierarchical {
 		public T value { get; set; }
 		public AVLNode<T> left { get; set; }
 		public AVLNode<T> right { get; set; }
-		int height;
+		public int height;
 	}
 }
