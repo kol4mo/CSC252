@@ -57,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Abstract\Abstract.csproj">
+      <Project>{1dfc329f-becb-4626-9b95-31415be3fd96}</Project>
+      <Name>Abstract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hierarchical\Hierarchical.csproj">
       <Project>{2e01b2ca-50b5-4ab4-beea-78fb0d10a446}</Project>
       <Name>Hierarchical</Name>

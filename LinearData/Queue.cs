@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LinearData {
-    public class Queue<T> where T : IComparable<T> {
+    public class Queue<T>{
         public QNode<T> head; // the next to be removed, first in I considered this the bottom of the queue
         public QNode<T> tail;// most recent add
         private int count = 0;
@@ -49,7 +49,7 @@ namespace LinearData {
         public bool Contains(T value) {
             if (head != null) {
                 for (QNode<T> node = head; node != null; node = node.next) {
-                    if (node.value.CompareTo(value) == 0) {
+                    if (node.value.Equals(value)) {
                         return true;
                     }
                 }
@@ -113,7 +113,7 @@ namespace LinearData {
         }
 
     }
-    public class QNode<T> where T : IComparable<T> {
+    public class QNode<T> {
         public T value;
         public QNode<T> next = null;//above
         public QNode<T> prev = null;//below, closer to head

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinearData", "LinearData\Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hierarchical", "Hierarchical\Hierarchical.csproj", "{2E01B2CA-50B5-4AB4-BEEA-78FB0D10A446}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstract", "Abstract\Abstract.csproj", "{1DFC329F-BECB-4626-9B95-31415BE3FD96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2E01B2CA-50B5-4AB4-BEEA-78FB0D10A446}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E01B2CA-50B5-4AB4-BEEA-78FB0D10A446}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E01B2CA-50B5-4AB4-BEEA-78FB0D10A446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DFC329F-BECB-4626-9B95-31415BE3FD96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DFC329F-BECB-4626-9B95-31415BE3FD96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DFC329F-BECB-4626-9B95-31415BE3FD96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DFC329F-BECB-4626-9B95-31415BE3FD96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

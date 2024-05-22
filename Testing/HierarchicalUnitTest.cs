@@ -204,7 +204,33 @@ namespace Testing {
         #endregion
 
         #region AVL
+        [TestMethod]
+        public void AVLLeft_HappyPath() {
+            AVL<int> avl = new AVL<int>();
+            avl.Add(1);
+            avl.Root.right = new AVLNode<int>(2);
+            avl.Root.right.right = new AVLNode<int>(3);
 
-        #endregion
-    }
+            avl.rotateLeft(avl.Root, avl.Root.right);
+
+            Assert.AreEqual(avl.Root.value, 2);
+            Assert.AreEqual(avl.Root.left.value, 1);
+            Assert.AreEqual(avl.Root.right.value, 3);
+        }
+
+		[TestMethod]
+		public void AVLRight_HappyPath() {
+			AVL<int> avl = new AVL<int>();
+			avl.Add(3);
+			avl.Root.left = new AVLNode<int>(2);
+			avl.Root.left.left = new AVLNode<int>(1);
+
+			avl.rotateRight(avl.Root, avl.Root.left);
+
+			Assert.AreEqual(avl.Root.value, 2);
+			Assert.AreEqual(avl.Root.left.value, 1);
+			Assert.AreEqual(avl.Root.right.value, 3);
+		}
+		#endregion
+	}
 }
