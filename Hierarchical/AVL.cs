@@ -10,14 +10,92 @@ namespace Hierarchical {
 		public int Count { get; set; }
 
 		public void Add(T value) {
-			AVLNode<T> node = new AVLNode<T>(value);
 			if (Root == null) {
+				AVLNode<T> node = new AVLNode<T>(value);
 				Root = node;
-				node.height = 1;
 				return;
 			}
 
+
 		}
+
+		private int Add(T value, AVLNode<T> current) {
+			int childHeight;
+			if (value.CompareTo(current.value) > 0) {
+				if (current.right == null) {
+					current.right = new AVLNode<T>(value);
+					childHeight = current.right.height;
+				} else {
+					childHeight = Add(value, current.right);
+				}
+			} else if (value.CompareTo(current.value) < 0) {
+				if (current.left == null) {
+					current.left = new AVLNode<T>(value);
+					childHeight = current.left.height;
+				} else {
+					childHeight = Add(value, current.left);
+				}
+			} else {// case of duplicate
+				return 0;
+			}
+			if (current.height == childHeight) current.height += 1;
+			if (current.value.CompareTo(Root.value) == 0) {
+				current.balance = current.left.height - current.right.height;
+				if (current.balance >= 2) {
+					if (current.left.balance < 0) {
+						rotateLeftRight(current, current.left);
+					} else {
+						rotateRight(current, current.left);
+					}
+				} else if (current.balance <= -2) {
+					if (current.right.balance > 0) {
+						rotateRightLeft(current, current.right);
+					} else {
+						rotateLeft(current, current.right);
+					}
+				}
+				current.balance = 0;
+			} else {
+
+				if (current.left.balance <= -2) {//negative is left rotation
+					if (current.left.left.balance > 0) {//check for extra rotation
+						rotateRightLeft(current, current.left.left);
+					} else {
+						rotateLeft(current, current.left.left);
+					}
+
+					current.left.balance = 0;
+				}
+				if (current.left.balance >= 2) {
+					if (current.left.right.balance < 0) {
+						rotateLeftRight(current, current.left.right);
+					} else {
+						rotateRight(current, current.left.right);
+					}
+					current.left.balance = 0;
+				}
+				if (current.right.balance >= 2) {
+					if (current.right.right.balance < 0) {
+						rotateLeftRight(current, current.right.right);
+					} else {
+						rotateRight(current, current.right.right);
+					}
+					current.right.balance = 0;
+				}
+				if (current.right.balance <= -2) {
+					if (current.right.left.balance > 0) {
+						rotateRightLeft(current, current.right.left);
+					} else {
+						rotateLeft(current, current.right.left);
+					}
+
+					current.left.balance = 0;
+				}
+				current.balance = current.left.height - current.right.height;
+			}
+			return current.height;
+		}
+
 
 		private AVLNode<T> Traverse(AVLNode<T> node, T value) {
 			if (node == null) {
@@ -298,13 +376,13 @@ namespace Hierarchical {
 		public void rotateLeftRight(AVLNode<T> parent, AVLNode<T> pivot) {
 			if (parent.left.value.CompareTo(pivot.value) == 0) {
 				rotateLeft(parent, pivot.right);
-			rotateRight(parent, parent.left);
+				rotateRight(parent, parent.left);
 			} else if (pivot.value.CompareTo(parent.value) > 0) {
 				rotateLeft(parent.right, pivot.right);
-			rotateRight(parent, parent.right.left);
+				rotateRight(parent, parent.right.left);
 			} else {
 				rotateLeft(parent.left, pivot.right);
-			rotateRight(parent, parent.left.left);
+				rotateRight(parent, parent.left.left);
 			}
 		}
 
@@ -320,6 +398,7 @@ namespace Hierarchical {
 		public T value { get; set; }
 		public AVLNode<T> left { get; set; }
 		public AVLNode<T> right { get; set; }
-		public int height;
+		public int height = 1;
+		public int balance = 0;
 	}
 }
