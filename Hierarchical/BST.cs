@@ -271,7 +271,7 @@ namespace Hierarchical {
          */
 
         private string InOrder(Node<T> node, string final) {
-            if (node == null) return final;
+            if (node == null    ) return final;
             if (node.left != null) {
                 final = InOrder(node.left, final);
                 final += ", ";
