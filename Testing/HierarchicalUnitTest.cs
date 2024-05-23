@@ -3,6 +3,7 @@ using LinearData;
 using System;
 using System.Collections;
 using Hierarchical;
+using System.Security.Cryptography;
 
 namespace Testing {
     [TestClass]
@@ -322,6 +323,196 @@ namespace Testing {
 			Assert.AreEqual(avl.Root.right.left.value, 2);
 		}
 
+        [TestMethod]
+        public void AVLAdd_HappyPath() {
+
+			AVL<int> avl = new AVL<int>();
+			avl.Add(1);
+            avl.Add(2);
+            avl.Add(3);
+
+            Assert.AreEqual(avl.Root.value, 2);
+            Assert.AreEqual(avl.Root.left.value, 1);
+            Assert.AreEqual(avl.Root.right.value, 3);
+		}
+
+        [TestMethod]
+        public void AVLAdd_BiggerTree() {
+
+			AVL<int> avl = new AVL<int>();
+			avl.Add(1);
+			avl.Add(2);
+			avl.Add(3);
+			avl.Add(4);
+			avl.Add(5);
+			avl.Add(6);
+			avl.Add(7);
+
+            Assert.AreEqual(avl.Root.value, 4);
+            Assert.AreEqual(avl.Root.left.value, 2);
+            Assert.AreEqual(avl.Root.left.left.value, 1);
+            Assert.AreEqual(avl.Root.left.right.value, 3);
+            Assert.AreEqual(avl.Root.right.value, 6);
+            Assert.AreEqual(avl.Root.right.left.value, 5);
+            Assert.AreEqual(avl.Root.right.right.value, 7);
+		}
+
+		[TestMethod]
+		public void AVLClear_HappyPath() {
+			AVL<int> avl = new AVL<int>();
+			avl.Add(1);
+			avl.Add(2);
+			avl.Clear();
+
+			Assert.AreEqual(0, avl.Count);
+			Assert.IsTrue(avl.Root == null, "Clear did not work");
+		}
+
+		[TestMethod]
+		public void AVLClear_empty() {
+			AVL<int> avl = new AVL<int>();
+            avl.Clear();
+
+			Assert.AreEqual(0, avl.Count);
+            Assert.IsTrue(avl.Root == null, "Clear did not work"); ;
+		}
+
+		[TestMethod]
+		public void AVLContains_HappyPath() {
+			AVL<int> bst = new AVL<int>();
+			bst.Add(1);
+			bst.Add(2);
+			Assert.IsTrue(bst.Contains(1));
+			Assert.IsTrue(bst.Contains(2));
+			Assert.IsFalse(bst.Contains(3));
+		}
+
+		[TestMethod]
+		public void AVLContains_Clear() {
+			AVL<int> bst = new AVL<int>();
+			Assert.IsFalse(bst.Contains(1));
+		}
+
+		[TestMethod]
+		public void AVLHeight_HappyPath() {
+			AVL<int> bst = new AVL<int>();
+			bst.Add(3);
+			bst.Add(2);
+			bst.Add(1);
+			Assert.IsTrue(bst.Height() == 2);
+		}
+
+		[TestMethod]
+		public void AVLHeight_Empty() {
+			AVL<int> bst = new AVL<int>();
+			Assert.IsTrue(bst.Height() == 0);
+		}
+
+		[TestMethod]
+		public void AVLToArray_HappyPath() {
+			int[] array = { 4, 2, 6, 1, 3, 5, 7 };
+			AVL<int> bst = new AVL<int>();
+			bst.Add(1);
+			bst.Add(2);
+			bst.Add(3);
+			bst.Add(4);
+			bst.Add(5);
+			bst.Add(6);
+			bst.Add(7);
+			int[] newArray = bst.ToArray();
+			for (int i = 0; i < array.Length; i++) {
+				Assert.AreEqual(array[i], newArray[i]);
+			}
+		}
+
+		[TestMethod]
+		public void AVLToArray_Empty() {
+			AVL<int> bst = new AVL<int>();
+
+			int[] newArray = bst.ToArray();
+			Assert.IsTrue(newArray.Length == 0);
+		}
+
+		[TestMethod]
+		public void AVLInOrder_HappyPath() {
+			string expected = "1, 2, 3, 4";
+			AVL<int> bst = new AVL<int>();
+			bst.Add(1);
+			bst.Add(3);
+			bst.Add(2);
+			bst.Add(4);
+			string order = bst.InOrder();
+			Assert.AreEqual(expected, order, order);
+		}
+
+		[TestMethod]
+		public void AVLInOrder_Empty() {
+			AVL<int> bst = new AVL<int>();
+			string order = bst.InOrder();
+			Assert.AreEqual("", order, order);
+		}
+
+		[TestMethod]
+		public void AVLPreOrder_HappyPath() {
+			string expected = "4, 2, 1, 3, 6, 5, 7";
+			AVL<int> bst = new AVL<int>();
+			bst.Add(1);
+			bst.Add(2);
+			bst.Add(3);
+			bst.Add(4);
+			bst.Add(5);
+			bst.Add(6);
+			bst.Add(7);
+			string order = bst.PreOrder();
+			Assert.AreEqual(expected, order, order);
+		}
+		[TestMethod]
+		public void AVLPreOrder_Empty() {
+			AVL<int> bst = new AVL<int>();
+			string order = bst.PreOrder();
+			Assert.AreEqual("", order, order);
+		}
+		[TestMethod]
+		public void AVLPostOrder_HappyPath() {
+			string expected = "1, 3, 2, 5, 7, 6, 4";
+			AVL<int> bst = new AVL<int>();
+			bst.Add(1);
+			bst.Add(2);
+			bst.Add(3);
+			bst.Add(4);
+			bst.Add(5);
+			bst.Add(6);
+			bst.Add(7);
+			string order = bst.PostOrder();
+			Assert.AreEqual(expected, order, order);
+		}
+		[TestMethod]
+		public void AVLPostOrder_Empty() {
+			AVL<int> bst = new AVL<int>();
+			string order = bst.PostOrder();
+			Assert.AreEqual("", order, order);
+		}
+
+		[TestMethod]
+		public void AVLRemove_Happy() {
+			AVL<int> avl = new AVL<int>();
+			avl.Add(4);
+			avl.Add(3);
+			avl.Add(2);
+			avl.Add(1);
+			avl.Remove(3);
+
+
+			Assert.AreEqual(avl.Root.value, 2);
+			Assert.AreEqual(avl.Root.left.value, 1);
+			Assert.AreEqual(avl.Root.right.value, 4);
+		}
+		[TestMethod]
+		public void AVLRemove_Empty() {
+			AVL<int> avl = new AVL<int>();
+			avl.Remove(3);
+			Assert.IsNull(avl.Root);
+		}
 		#endregion
 	}
 }
