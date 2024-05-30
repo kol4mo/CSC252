@@ -15,6 +15,11 @@ namespace Abstract {
 			edges = new Edge[0];
 		}
 
+		/// <summary>
+		/// adds the edge to this node BigO (1)
+		/// </summary>
+		/// <param name="other">the node where this edge will lead</param>
+		/// <param name="weight">the cost or weight of the edge</param>
 		public void addEdge(Node other, float weight) {
 			Edge edge = new Edge(this, other, weight);
 			edges = edges.Append(edge).ToArray();

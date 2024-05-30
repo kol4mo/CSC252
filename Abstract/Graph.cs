@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 namespace Abstract {
 	public class Graph {
 		public Node[] nodes;
-
+		/// <summary>
+		/// Creates Graph BigO (n)
+		/// </summary>
+		/// <param name="nodeEdgesString"> a list of string that identifies each edges</param>
+		/// <param name="nodeValues">the values used for each node</param>
 		public Graph(string[] nodeEdgesString, string[] nodeValues) {
 			Dictionary<string, float>[] nodesEdges = new Dictionary<string, float>[0];
 			foreach (var edgeString in nodeEdgesString) {
@@ -24,6 +28,11 @@ namespace Abstract {
 			}
 		}
 
+		/// <summary>
+		/// adds all the edges to a node BigO (n^2)
+		/// </summary>
+		/// <param name="node">the node edges are added to</param>
+		/// <param name="edgesDict">the key is the values contained by nodes, and the value is the weight of the edge</param>
 		public void addNodeEdge(Node node, Dictionary<string, float> edgesDict) {
 			foreach (var value in edgesDict) {
 				foreach (var edgeNode in nodes) {
@@ -35,6 +44,11 @@ namespace Abstract {
 			}
 		}
 
+		/// <summary>
+		/// creates a dictionary out of string information for each edge BigO (n)
+		/// </summary>
+		/// <param name="data">the string of information formated as K:V,K:V,K:V</param>
+		/// <returns>a dictionary continaing information for each edge</returns>
 		public Dictionary<string, float> constructDictionary(string data) {
 			string[] pairs = data.Split(',');
 			Dictionary<string, float> edgesDictionary = new Dictionary<string, float>();
@@ -71,6 +85,11 @@ namespace Abstract {
 		 *	
 		 *	return weights
 		 */
+
+		/// <summary>
+		/// finds the Minimum spanning tree using the prims algorithm BigO(n^2)
+		/// </summary>
+		/// <returns>the total length of the found minimum spanning tree</returns>
 		public float prims() {
 			Node[] currentNodes = { nodes[0] };
 			Edge[] currentEdges = { };
