@@ -47,6 +47,30 @@ namespace Abstract {
 			return edgesDictionary;
 		}
 
+		/*
+		 *float prims()
+		 *	initilize variables
+		 *	mst nodes = first node
+		 *	avaiable edges = first node edges
+		 *	while searching {
+		 *		for each edge in avaiable edges {
+		 *			check if edge contains nodes not introduced
+		 *				if the edge to be added hasnt been set, set edge
+		 *				else check if edge to be added weight less then edge
+		 *		}
+		 *		
+		 *		if current edge is not null {
+		 *			add current edge to mst edges
+		 *			remove current edge from available edges
+		 *			mst nodes adds edge connecting node
+		 *			add all edges from connecting node
+		 *		}
+		 *	}
+		 *	
+		 *	count up mst edges weights
+		 *	
+		 *	return weights
+		 */
 		public float prims() {
 			Node[] currentNodes = { nodes[0] };
 			Edge[] currentEdges = { };
