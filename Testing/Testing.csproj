@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="abstractUnitTest.cs" />
     <Compile Include="HierarchicalUnitTest.cs" />
     <Compile Include="LinearUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

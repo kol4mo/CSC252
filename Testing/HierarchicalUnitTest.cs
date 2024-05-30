@@ -426,6 +426,7 @@ namespace Testing {
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(NullReferenceException))]
 		public void AVLToArray_Empty() {
 			AVL<int> bst = new AVL<int>();
 
